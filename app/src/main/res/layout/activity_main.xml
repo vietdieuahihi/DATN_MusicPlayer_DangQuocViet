@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_toolbar" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@+id/header"/>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/layout_bottom"
+            android:visibility="visible"
+            layout="@layout/layout_control_bottom"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/headBot"
+            app:itemIconTint="@color/custom_bottom_navigation"
+            app:itemTextColor="@color/custom_bottom_navigation"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/menu_bottom_navigation"
+            />
+    </LinearLayout>
+</RelativeLayout>

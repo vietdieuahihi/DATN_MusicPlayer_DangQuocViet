@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1093960619829",
+    "firebase_url": "https://music-data-ae293-default-rtdb.firebaseio.com",
+    "project_id": "music-data-ae293",
+    "storage_bucket": "music-data-ae293.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093960619829:android:35a173b78caf9202321e7c",
+        "android_client_info": {
+          "package_name": "com.example.musicplayer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChS7nQ-gAJJawMTewxGhlZGkOhu_IvI1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093960619829:android:89c2cf477c1c5f5a321e7c",
+        "android_client_info": {
+          "package_name": "com.example.vxsound"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChS7nQ-gAJJawMTewxGhlZGkOhu_IvI1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093960619829:android:000c281b5b382562321e7c",
+        "android_client_info": {
+          "package_name": "com.medium.music"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChS7nQ-gAJJawMTewxGhlZGkOhu_IvI1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

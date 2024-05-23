@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.vxsound">
+
+    <uses-configuration android:name="android.permission.INTERNET" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+
+    <application
+        android:name="com.example.vxsound.MyApplication"
+        android:allowBackup="false"
+        tools:replace="android:allowBackup"
+        android:fitsSystemWindows="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_small_push_notification" />
+
+        <service
+            android:name="com.example.vxsound.service.MusicService"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.example.vxsound.service.MusicReceiver"
+            android:exported="false" />
+
+        <activity
+            android:exported="true"
+            android:name="com.example.vxsound.activity.SplashActivity">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:exported="false"
+            android:name="com.example.vxsound.activity.MainActivity" />
+
+        <activity
+            android:exported="false"
+            android:name="com.example.vxsound.activity.PlayMusicActivity" />
+
+        <activity
+            android:name="com.example.vxsound.activity.SignUpActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.SignInActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.ForgotPasswordActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.ChangePasswordActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.AddSongActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.PopularSongsActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.NewSongsActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.FeedbackActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.ContactActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.AdminMainActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name="com.example.vxsound.activity.FeaturedSongsActivity"
+            android:exported="false"/>
+    </application>
+</manifest>

@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Layer 1: Hình tròn -->
+    <item>
+        <shape
+            android:shape="oval">
+            <corners android:radius="10dp"/>
+            <gradient
+                android:type="linear"
+                android:startColor="#00FFEB"
+                android:endColor="#073ABB"
+                android:angle="0"/>
+        </shape>
+    </item>
+    <!-- Layer 2: Nút play -->
+    <item>
+        <vector
+            android:width="@dimen/define_dimen_50"
+            android:height="@dimen/define_dimen_50"
+            android:viewportWidth="24"
+            android:viewportHeight="24"
+            android:tint="@color/white">
+            <path android:fillColor="@android:color/white" android:pathData="M8,5v14l11,-7z"/>
+        </vector>
+    </item>
+</layer-list>
