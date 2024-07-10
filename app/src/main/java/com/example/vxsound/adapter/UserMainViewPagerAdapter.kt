@@ -8,7 +8,8 @@ import com.example.vxsound.fragment.HomeFragment
 import com.example.vxsound.fragment.SearchFragment
 import com.example.vxsound.fragment.SettingsFragment
 
-class UserMainViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class UserMainViewPagerAdapter(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             1 -> SearchFragment()

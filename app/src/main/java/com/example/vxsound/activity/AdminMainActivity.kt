@@ -42,8 +42,10 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
         mActivityAdminMainBinding = ActivityAdminMainBinding.inflate(layoutInflater)
         setContentView(mActivityAdminMainBinding?.root)
         checkNotificationPermission()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,
-                IntentFilter(Constant.CHANGE_LISTENER))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mBroadcastReceiver,
+            IntentFilter(Constant.CHANGE_LISTENER)
+        )
         setupActivity()
         initListener()
         displayLayoutBottom()
@@ -59,9 +61,16 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
 
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(this,
-                            Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
             }
         }
     }
@@ -70,23 +79,30 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
         mActivityAdminMainBinding?.viewpager2?.isUserInputEnabled = false
         val adminMainViewPagerAdapter = AdminMainViewPagerAdapter(this)
         mActivityAdminMainBinding?.viewpager2?.adapter = adminMainViewPagerAdapter
-        mActivityAdminMainBinding?.viewpager2?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+        mActivityAdminMainBinding?.viewpager2?.registerOnPageChangeCallback(object :
+            OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 when (position) {
                     0 -> {
-                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_home)?.isChecked = true
-                        mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_home)
+                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_home)?.isChecked =
+                            true
+                        mActivityAdminMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_home)
                     }
 
                     1 -> {
-                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_feedback)?.isChecked = true
-                        mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_feedback)
+                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_feedback)?.isChecked =
+                            true
+                        mActivityAdminMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_feedback)
                     }
 
                     2 -> {
-                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_settings)?.isChecked = true
-                        mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_settings)
+                        mActivityAdminMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_settings)?.isChecked =
+                            true
+                        mActivityAdminMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_settings)
                     }
                 }
             }
@@ -97,13 +113,17 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
                     mActivityAdminMainBinding?.viewpager2?.currentItem = 0
                     mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_home)
                 }
+
                 R.id.nav_feedback -> {
                     mActivityAdminMainBinding?.viewpager2?.currentItem = 1
-                    mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_feedback)
+                    mActivityAdminMainBinding?.header?.tvTitle?.text =
+                        getString(R.string.menu_feedback)
                 }
+
                 R.id.nav_settings -> {
                     mActivityAdminMainBinding?.viewpager2?.currentItem = 2
-                    mActivityAdminMainBinding?.header?.tvTitle?.text = getString(R.string.menu_settings)
+                    mActivityAdminMainBinding?.header?.tvTitle?.text =
+                        getString(R.string.menu_settings)
                 }
             }
             true
@@ -131,13 +151,13 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
 
     private fun showConfirmExitApp() {
         MaterialDialog.Builder(this)
-                .title(getString(R.string.app_name))
-                .content(getString(R.string.msg_exit_app))
-                .positiveText(getString(R.string.action_ok))
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> finish() }
-                .negativeText(getString(R.string.action_cancel))
-                .cancelable(false)
-                .show()
+            .title(getString(R.string.app_name))
+            .content(getString(R.string.msg_exit_app))
+            .positiveText(getString(R.string.action_ok))
+            .onPositive { _: MaterialDialog?, _: DialogAction? -> finish() }
+            .negativeText(getString(R.string.action_cancel))
+            .cancelable(false)
+            .show()
     }
 
     private fun displayLayoutBottom() {
@@ -195,7 +215,11 @@ class AdminMainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun clickOnCloseButton() {
-        GlobalFunction.startMusicService(this, Constant.CANNEL_NOTIFICATION, MusicService.mSongPosition)
+        GlobalFunction.startMusicService(
+            this,
+            Constant.CANNEL_NOTIFICATION,
+            MusicService.mSongPosition
+        )
     }
 
     private fun openPlayMusicActivity() {

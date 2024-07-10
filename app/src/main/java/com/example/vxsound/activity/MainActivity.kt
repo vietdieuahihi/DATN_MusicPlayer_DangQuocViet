@@ -65,12 +65,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mActivityMainBinding?.root)
         checkNotificationPermission()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,
-            IntentFilter(Constant.CHANGE_LISTENER))
-        LocalBroadcastManager.getInstance(this).registerReceiver(languageReceiver,
-            IntentFilter(Constant.CHANGE_LANGUAGE))
-        LocalBroadcastManager.getInstance(this).registerReceiver(darkModeReceiver,
-            IntentFilter(Constant.CHANGE_DARK_MODE))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mBroadcastReceiver,
+            IntentFilter(Constant.CHANGE_LISTENER)
+        )
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            languageReceiver,
+            IntentFilter(Constant.CHANGE_LANGUAGE)
+        )
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            darkModeReceiver,
+            IntentFilter(Constant.CHANGE_DARK_MODE)
+        )
         setupActivity()
         initListener()
         displayLayoutBottom()
@@ -116,9 +122,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
             }
         }
     }
@@ -127,28 +140,36 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mActivityMainBinding?.viewpager2?.isUserInputEnabled = false
         val userMainViewPagerAdapter = UserMainViewPagerAdapter(this)
         mActivityMainBinding?.viewpager2?.adapter = userMainViewPagerAdapter
-        mActivityMainBinding?.viewpager2?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+        mActivityMainBinding?.viewpager2?.registerOnPageChangeCallback(object :
+            OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 when (position) {
                     0 -> {
-                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_home)?.isChecked = true
+                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_home)?.isChecked =
+                            true
                         mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_home)
                     }
 
                     1 -> {
-                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_search)?.isChecked = true
-                        mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_search)
+                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_search)?.isChecked =
+                            true
+                        mActivityMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_search)
                     }
 
                     2 -> {
-                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_favorite)?.isChecked = true
-                        mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_favorite_songs)
+                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_favorite)?.isChecked =
+                            true
+                        mActivityMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_favorite_songs)
                     }
 
                     3 -> {
-                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_settings)?.isChecked = true
-                        mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_settings)
+                        mActivityMainBinding?.bottomNavigation?.menu?.findItem(R.id.nav_settings)?.isChecked =
+                            true
+                        mActivityMainBinding?.header?.tvTitle?.text =
+                            getString(R.string.menu_settings)
                     }
                 }
             }
@@ -159,14 +180,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     mActivityMainBinding?.viewpager2?.currentItem = 0
                     mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_home)
                 }
+
                 R.id.nav_search -> {
                     mActivityMainBinding?.viewpager2?.currentItem = 1
                     mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_search)
                 }
+
                 R.id.nav_favorite -> {
                     mActivityMainBinding?.viewpager2?.currentItem = 2
-                    mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_favorite_songs)
+                    mActivityMainBinding?.header?.tvTitle?.text =
+                        getString(R.string.menu_favorite_songs)
                 }
+
                 R.id.nav_settings -> {
                     mActivityMainBinding?.viewpager2?.currentItem = 3
                     mActivityMainBinding?.header?.tvTitle?.text = getString(R.string.menu_settings)
@@ -261,7 +286,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun clickOnCloseButton() {
-        GlobalFunction.startMusicService(this, Constant.CANNEL_NOTIFICATION, MusicService.mSongPosition)
+        GlobalFunction.startMusicService(
+            this,
+            Constant.CANNEL_NOTIFICATION,
+            MusicService.mSongPosition
+        )
     }
 
     private fun openPlayMusicActivity() {

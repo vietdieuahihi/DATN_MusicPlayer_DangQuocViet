@@ -14,14 +14,17 @@ import com.example.vxsound.utils.GlideUtils
 import kotlinx.android.synthetic.main.item_admin_song.view.tv_artist
 import kotlinx.android.synthetic.main.item_admin_song.view.tv_name
 
-class AdminSongAdapter(private val mListSongs: List<Song>?, private val iOnManagerSongListener: IOnManagerSongListener) : RecyclerView.Adapter<AdminSongViewHolder?>() {
+class AdminSongAdapter(
+    private val mListSongs: List<Song>?,
+    private val iOnManagerSongListener: IOnManagerSongListener
+) : RecyclerView.Adapter<AdminSongViewHolder?>() {
 
-//    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    //    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 //        val adminSong: TextView = itemView.findViewById(R.id.tv_name)
 //    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminSongViewHolder {
         val itemAdminSongBinding = ItemAdminSongBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return AdminSongViewHolder(itemAdminSongBinding)
     }
 
@@ -40,10 +43,26 @@ class AdminSongAdapter(private val mListSongs: List<Song>?, private val iOnManag
         } else {
             holder.mItemAdminSongBinding.tvLatest.text = "No"
         }
-        holder.mItemAdminSongBinding.layoutImage.setOnClickListener { iOnManagerSongListener.onClickItemSong(song) }
-        holder.mItemAdminSongBinding.layoutInfor.setOnClickListener { iOnManagerSongListener.onClickItemSong(song) }
-        holder.mItemAdminSongBinding.imgEdit.setOnClickListener { iOnManagerSongListener.onClickUpdateSong(song) }
-        holder.mItemAdminSongBinding.imgDelete.setOnClickListener { iOnManagerSongListener.onClickDeleteSong(song) }
+        holder.mItemAdminSongBinding.layoutImage.setOnClickListener {
+            iOnManagerSongListener.onClickItemSong(
+                song
+            )
+        }
+        holder.mItemAdminSongBinding.layoutInfor.setOnClickListener {
+            iOnManagerSongListener.onClickItemSong(
+                song
+            )
+        }
+        holder.mItemAdminSongBinding.imgEdit.setOnClickListener {
+            iOnManagerSongListener.onClickUpdateSong(
+                song
+            )
+        }
+        holder.mItemAdminSongBinding.imgDelete.setOnClickListener {
+            iOnManagerSongListener.onClickDeleteSong(
+                song
+            )
+        }
 
         //
         holder.itemView.tv_name.isSelected = true
@@ -57,5 +76,6 @@ class AdminSongAdapter(private val mListSongs: List<Song>?, private val iOnManag
         return mListSongs?.size ?: 0
     }
 
-    class AdminSongViewHolder(val mItemAdminSongBinding: ItemAdminSongBinding) : RecyclerView.ViewHolder(mItemAdminSongBinding.root)
+    class AdminSongViewHolder(val mItemAdminSongBinding: ItemAdminSongBinding) :
+        RecyclerView.ViewHolder(mItemAdminSongBinding.root)
 }

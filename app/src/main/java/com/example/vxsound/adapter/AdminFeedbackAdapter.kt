@@ -7,10 +7,13 @@ import com.example.vxsound.adapter.AdminFeedbackAdapter.AdminFeedbackViewHolder
 import com.example.vxsound.databinding.ItemFeedbackBinding
 import com.example.vxsound.model.Feedback
 
-class AdminFeedbackAdapter(private val mListFeedback: List<Feedback>?) : RecyclerView.Adapter<AdminFeedbackViewHolder?>() {
+class AdminFeedbackAdapter(private val mListFeedback: List<Feedback>?) :
+    RecyclerView.Adapter<AdminFeedbackViewHolder?>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminFeedbackViewHolder {
-        val itemFeedbackBinding = ItemFeedbackBinding.inflate(LayoutInflater.from(parent.context),
-                parent, false)
+        val itemFeedbackBinding = ItemFeedbackBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return AdminFeedbackViewHolder(itemFeedbackBinding)
     }
 
@@ -24,5 +27,6 @@ class AdminFeedbackAdapter(private val mListFeedback: List<Feedback>?) : Recycle
         return mListFeedback?.size ?: 0
     }
 
-    class AdminFeedbackViewHolder(val mItemFeedbackBinding: ItemFeedbackBinding) : RecyclerView.ViewHolder(mItemFeedbackBinding.root)
+    class AdminFeedbackViewHolder(val mItemFeedbackBinding: ItemFeedbackBinding) :
+        RecyclerView.ViewHolder(mItemFeedbackBinding.root)
 }

@@ -35,7 +35,7 @@ class ContactActivity : BaseActivity() {
         mActivityContactBinding?.tvAboutUsTitle?.text = AboutUsConfig.ABOUT_US_TITLE
         mActivityContactBinding?.tvAboutUsContent?.text = AboutUsConfig.ABOUT_US_CONTENT
         mActivityContactBinding?.tvAboutUsWebsite?.text = AboutUsConfig.ABOUT_US_WEBSITE_TITLE
-        mContactAdapter = ContactAdapter(this, listContact(), object : ContactAdapter.ICallPhone{
+        mContactAdapter = ContactAdapter(this, listContact(), object : ContactAdapter.ICallPhone {
             override fun onClickCallPhone() {
                 GlobalFunction.callPhoneNumber(this@ContactActivity)
             }
@@ -48,7 +48,14 @@ class ContactActivity : BaseActivity() {
     }
 
     private fun initListener() {
-        mActivityContactBinding?.layoutWebsite?.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(AboutUsConfig.WEBSITE))) }
+        mActivityContactBinding?.layoutWebsite?.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(AboutUsConfig.WEBSITE)
+                )
+            )
+        }
     }
 
     private fun listContact(): List<Contact> {

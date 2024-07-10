@@ -18,9 +18,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun createProgressDialog() {
         progressDialog = MaterialDialog.Builder(this)
-                .content(R.string.msg_please_waiting)
-                .progress(true, 0)
-                .build()
+            .content(R.string.msg_please_waiting)
+            .progress(true, 0)
+            .build()
     }
 
     fun showProgressDialog(value: Boolean) {
@@ -47,10 +47,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun createAlertDialog() {
         alertDialog = MaterialDialog.Builder(this)
-                .title(R.string.app_name)
-                .positiveText(R.string.action_ok)
-                .cancelable(false)
-                .build()
+            .title(R.string.app_name)
+            .positiveText(R.string.action_ok)
+            .cancelable(false)
+            .build()
     }
 
     fun showAlertDialog(errorMessage: String?) {

@@ -20,7 +20,8 @@ class SongAdapter(
 ) : RecyclerView.Adapter<SongViewHolder?>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
-        val itemSongBinding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemSongBinding =
+            ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SongViewHolder(itemSongBinding)
     }
 
@@ -47,8 +48,17 @@ class SongAdapter(
             holder.mItemSongBinding.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
         }
 
-        holder.mItemSongBinding.layoutItem.setOnClickListener { iOnClickSongItemListener.onClickItemSong(song) }
-        holder.mItemSongBinding.imgFavorite.setOnClickListener { iOnClickSongItemListener.onClickFavoriteSong(song, !isFavorite) }
+        holder.mItemSongBinding.layoutItem.setOnClickListener {
+            iOnClickSongItemListener.onClickItemSong(
+                song
+            )
+        }
+        holder.mItemSongBinding.imgFavorite.setOnClickListener {
+            iOnClickSongItemListener.onClickFavoriteSong(
+                song,
+                !isFavorite
+            )
+        }
 
         //Chay chu
         holder.itemView.tv_song_name.isSelected = true
@@ -62,5 +72,6 @@ class SongAdapter(
         return mListSongs?.size ?: 0
     }
 
-    class SongViewHolder(val mItemSongBinding: ItemSongBinding) : RecyclerView.ViewHolder(mItemSongBinding.root)
+    class SongViewHolder(val mItemSongBinding: ItemSongBinding) :
+        RecyclerView.ViewHolder(mItemSongBinding.root)
 }

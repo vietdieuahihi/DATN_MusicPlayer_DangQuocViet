@@ -26,7 +26,7 @@ class SongPlayingAdapter(private val mListSongs: List<Song>?, private val iOnCli
             holder.mItemSongPlayingBinding.layoutItem.setBackgroundResource(R.color.background_bottom)
             holder.mItemSongPlayingBinding.imgPlaying.visibility = View.VISIBLE
         } else {
-            holder.mItemSongPlayingBinding.layoutItem.setBackgroundResource(R.color.white)
+            holder.mItemSongPlayingBinding.layoutItem.setBackgroundResource(R.color.bgrplaying)
             holder.mItemSongPlayingBinding.imgPlaying.visibility = View.GONE
         }
         GlideUtils.loadUrl(song.image, holder.mItemSongPlayingBinding.imgSong)

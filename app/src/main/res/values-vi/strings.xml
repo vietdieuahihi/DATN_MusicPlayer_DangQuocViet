@@ -94,4 +94,5 @@
     <string name="listen">lượt nghe</string>
     <string name="language">Ngôn ngữ</string>
     <string name="mode">Chế độ</string>
+    <string name="noti_search">Không tìm thấy bài hát\nVui lòng thử tìm kiếm từ khoá khác!</string>
 </resources>

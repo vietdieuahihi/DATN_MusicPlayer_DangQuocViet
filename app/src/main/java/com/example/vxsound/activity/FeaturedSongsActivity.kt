@@ -36,7 +36,8 @@ class FeaturedSongsActivity : BaseActivity() {
 
     private fun setupToolbar() {
         mActivityFeaturedSongsBinding?.header?.imgBack?.visibility = View.VISIBLE
-        mActivityFeaturedSongsBinding?.header?.tvTitle?.text = getString(R.string.menu_featured_songs)
+        mActivityFeaturedSongsBinding?.header?.tvTitle?.text =
+            getString(R.string.menu_featured_songs)
         mActivityFeaturedSongsBinding?.header?.imgBack?.setOnClickListener { onBackPressed() }
     }
 
@@ -58,24 +59,28 @@ class FeaturedSongsActivity : BaseActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadListFeaturedSongs() {
-        MyApplication[this].songsDatabaseReference()?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resetListData()
-                for (dataSnapshot in snapshot.children) {
-                    val song = dataSnapshot.getValue(Song::class.java) ?: return
-                    if (song.isFeatured == true) {
-                        mListSong!!.add(0, song)
+        MyApplication[this].songsDatabaseReference()
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    resetListData()
+                    for (dataSnapshot in snapshot.children) {
+                        val song = dataSnapshot.getValue(Song::class.java) ?: return
+                        if (song.isFeatured == true) {
+                            mListSong!!.add(0, song)
+                        }
                     }
+                    val isHasData = mListSong != null && mListSong!!.size > 1
+                    displayLayoutPlayAll(isHasData)
+                    if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
                 }
-                val isHasData = mListSong != null && mListSong!!.size > 1
-                displayLayoutPlayAll(isHasData)
-                if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                GlobalFunction.showToastMessage(this@FeaturedSongsActivity, getString(R.string.msg_get_date_error))
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    GlobalFunction.showToastMessage(
+                        this@FeaturedSongsActivity,
+                        getString(R.string.msg_get_date_error)
+                    )
+                }
+            })
     }
 
     private fun resetListData() {

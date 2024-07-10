@@ -58,24 +58,28 @@ class NewSongsActivity : BaseActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadListNewSongs() {
-        MyApplication[this].songsDatabaseReference()?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resetListData()
-                for (dataSnapshot in snapshot.children) {
-                    val song = dataSnapshot.getValue(Song::class.java) ?: return
-                    if (song.isLatest == true) {
-                        mListSong!!.add(0, song)
+        MyApplication[this].songsDatabaseReference()
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    resetListData()
+                    for (dataSnapshot in snapshot.children) {
+                        val song = dataSnapshot.getValue(Song::class.java) ?: return
+                        if (song.isLatest == true) {
+                            mListSong!!.add(0, song)
+                        }
                     }
+                    val isHasData = mListSong != null && mListSong!!.size > 1
+                    displayLayoutPlayAll(isHasData)
+                    if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
                 }
-                val isHasData = mListSong != null && mListSong!!.size > 1
-                displayLayoutPlayAll(isHasData)
-                if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                GlobalFunction.showToastMessage(this@NewSongsActivity, getString(R.string.msg_get_date_error))
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    GlobalFunction.showToastMessage(
+                        this@NewSongsActivity,
+                        getString(R.string.msg_get_date_error)
+                    )
+                }
+            })
     }
 
     private fun resetListData() {

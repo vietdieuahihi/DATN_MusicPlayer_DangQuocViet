@@ -14,10 +14,14 @@ import kotlinx.android.synthetic.main.item_song.view.tv_artist
 import kotlinx.android.synthetic.main.item_song_grid.view.tv_artist
 import kotlinx.android.synthetic.main.item_song_grid.view.tv_song_name
 
-class SongGridAdapter(private val mListSongs: List<Song>?, private val iOnClickSongItemListener: IOnClickSongItemListener) : RecyclerView.Adapter<SongGridViewHolder?>() {
+class SongGridAdapter(
+    private val mListSongs: List<Song>?,
+    private val iOnClickSongItemListener: IOnClickSongItemListener
+) : RecyclerView.Adapter<SongGridViewHolder?>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongGridViewHolder {
-        val itemSongGridBinding = ItemSongGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemSongGridBinding =
+            ItemSongGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SongGridViewHolder(itemSongGridBinding)
     }
 
@@ -40,8 +44,17 @@ class SongGridAdapter(private val mListSongs: List<Song>?, private val iOnClickS
         } else {
             holder.mItemSongGridBinding.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
         }
-        holder.mItemSongGridBinding.layoutItem.setOnClickListener { iOnClickSongItemListener.onClickItemSong(song) }
-        holder.mItemSongGridBinding.imgFavorite.setOnClickListener { iOnClickSongItemListener.onClickFavoriteSong(song, !isFavorite) }
+        holder.mItemSongGridBinding.layoutItem.setOnClickListener {
+            iOnClickSongItemListener.onClickItemSong(
+                song
+            )
+        }
+        holder.mItemSongGridBinding.imgFavorite.setOnClickListener {
+            iOnClickSongItemListener.onClickFavoriteSong(
+                song,
+                !isFavorite
+            )
+        }
 
         //chay chu
         holder.itemView.tv_song_name.isSelected = true
@@ -53,5 +66,6 @@ class SongGridAdapter(private val mListSongs: List<Song>?, private val iOnClickS
         return mListSongs?.size ?: 0
     }
 
-    class SongGridViewHolder(val mItemSongGridBinding: ItemSongGridBinding) : RecyclerView.ViewHolder(mItemSongGridBinding.root)
+    class SongGridViewHolder(val mItemSongGridBinding: ItemSongGridBinding) :
+        RecyclerView.ViewHolder(mItemSongGridBinding.root)
 }

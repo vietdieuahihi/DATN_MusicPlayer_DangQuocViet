@@ -7,7 +7,8 @@ import com.example.vxsound.fragment.AdminFeedbackFragment
 import com.example.vxsound.fragment.AdminHomeFragment
 import com.example.vxsound.fragment.SettingsFragment
 
-class AdminMainViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class AdminMainViewPagerAdapter(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             1 -> AdminFeedbackFragment()

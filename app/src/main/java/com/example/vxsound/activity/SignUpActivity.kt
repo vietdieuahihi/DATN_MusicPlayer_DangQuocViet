@@ -31,22 +31,42 @@ class SignUpActivity : BaseActivity() {
         val strEmail = mActivitySignUpBinding?.edtEmail?.text.toString().trim { it <= ' ' }
         val strPassword = mActivitySignUpBinding?.edtPassword?.text.toString().trim { it <= ' ' }
         if (StringUtil.isEmpty(strEmail)) {
-            Toast.makeText(this@SignUpActivity, getString(R.string.msg_email_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@SignUpActivity,
+                getString(R.string.msg_email_require),
+                Toast.LENGTH_SHORT
+            ).show()
         } else if (StringUtil.isEmpty(strPassword)) {
-            Toast.makeText(this@SignUpActivity, getString(R.string.msg_password_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@SignUpActivity,
+                getString(R.string.msg_password_require),
+                Toast.LENGTH_SHORT
+            ).show()
         } else if (!StringUtil.isValidEmail(strEmail)) {
-            Toast.makeText(this@SignUpActivity, getString(R.string.msg_email_invalid), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@SignUpActivity,
+                getString(R.string.msg_email_invalid),
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             if (mActivitySignUpBinding?.rdbAdmin?.isChecked == true) {
                 if (!strEmail.contains(Constant.ADMIN_EMAIL_FORMAT)) {
-                    Toast.makeText(this@SignUpActivity, getString(R.string.msg_email_invalid_admin), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        getString(R.string.msg_email_invalid_admin),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     signUpUser(strEmail, strPassword)
                 }
                 return
             }
             if (strEmail.contains(Constant.ADMIN_EMAIL_FORMAT)) {
-                Toast.makeText(this@SignUpActivity, getString(R.string.msg_email_invalid_user), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@SignUpActivity,
+                    getString(R.string.msg_email_invalid_user),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 signUpUser(strEmail, strPassword)
             }
@@ -57,27 +77,35 @@ class SignUpActivity : BaseActivity() {
         showProgressDialog(true)
         val firebaseAuth = FirebaseAuth.getInstance()
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task: Task<AuthResult?> ->
-                    showProgressDialog(false)
-                    if (task.isSuccessful) {
-                        val user = firebaseAuth.currentUser
-                        if (user != null) {
-                            val userObject = User(user.email, password)
-                            if (user.email != null && user.email!!.contains(Constant.ADMIN_EMAIL_FORMAT)) {
-                                userObject.isAdmin = true
-                            }
-                            DataStoreManager.user = userObject
-                            if (DataStoreManager.user?.isAdmin == true) {
-                                GlobalFunction.startActivity(this@SignUpActivity, AdminMainActivity::class.java)
-                            } else {
-                                GlobalFunction.startActivity(this@SignUpActivity, MainActivity::class.java)
-                            }
-                            finishAffinity()
+            .addOnCompleteListener(this) { task: Task<AuthResult?> ->
+                showProgressDialog(false)
+                if (task.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+                    if (user != null) {
+                        val userObject = User(user.email, password)
+                        if (user.email != null && user.email!!.contains(Constant.ADMIN_EMAIL_FORMAT)) {
+                            userObject.isAdmin = true
                         }
-                    } else {
-                        Toast.makeText(this@SignUpActivity, getString(R.string.msg_sign_up_error),
-                                Toast.LENGTH_SHORT).show()
+                        DataStoreManager.user = userObject
+                        if (DataStoreManager.user?.isAdmin == true) {
+                            GlobalFunction.startActivity(
+                                this@SignUpActivity,
+                                AdminMainActivity::class.java
+                            )
+                        } else {
+                            GlobalFunction.startActivity(
+                                this@SignUpActivity,
+                                MainActivity::class.java
+                            )
+                        }
+                        finishAffinity()
                     }
+                } else {
+                    Toast.makeText(
+                        this@SignUpActivity, getString(R.string.msg_sign_up_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
     }
 }

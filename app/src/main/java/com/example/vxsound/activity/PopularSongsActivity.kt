@@ -58,25 +58,29 @@ class PopularSongsActivity : BaseActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadListPopularSongs() {
-        MyApplication[this].songsDatabaseReference()?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resetListData()
-                for (dataSnapshot in snapshot.children) {
-                    val song = dataSnapshot.getValue(Song::class.java) ?: return
-                    if (song.count > 0) {
-                        mListSong!!.add(song)
+        MyApplication[this].songsDatabaseReference()
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    resetListData()
+                    for (dataSnapshot in snapshot.children) {
+                        val song = dataSnapshot.getValue(Song::class.java) ?: return
+                        if (song.count > 0) {
+                            mListSong!!.add(song)
+                        }
                     }
+                    mListSong?.let { it.sortWith(Comparator { song1: Song, song2: Song -> song2.count - song1.count }) }
+                    val isHasData = mListSong != null && mListSong!!.size > 1
+                    displayLayoutPlayAll(isHasData)
+                    if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
                 }
-                mListSong?.let { it.sortWith(Comparator { song1: Song, song2: Song -> song2.count - song1.count }) }
-                val isHasData = mListSong != null && mListSong!!.size > 1
-                displayLayoutPlayAll(isHasData)
-                if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                GlobalFunction.showToastMessage(this@PopularSongsActivity, getString(R.string.msg_get_date_error))
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    GlobalFunction.showToastMessage(
+                        this@PopularSongsActivity,
+                        getString(R.string.msg_get_date_error)
+                    )
+                }
+            })
     }
 
     private fun resetListData() {

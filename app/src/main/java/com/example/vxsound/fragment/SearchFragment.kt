@@ -148,8 +148,10 @@ class SearchFragment : Fragment() {
         if (isShow) {
             mFragmentSearchBinding?.layoutPlayAll?.visibility = View.VISIBLE
             GlideUtils.loadUrl(mListSong!![0].image, mFragmentSearchBinding?.imgPlayAll!!)
+            mFragmentSearchBinding?.notiSearch?.visibility = View.GONE
         } else {
             mFragmentSearchBinding?.layoutPlayAll?.visibility = View.GONE
+            mFragmentSearchBinding?.notiSearch?.visibility = View.VISIBLE
         }
     }
 }

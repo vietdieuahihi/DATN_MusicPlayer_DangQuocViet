@@ -70,19 +70,23 @@ class AddSongActivity : BaseActivity() {
         val isFeatured = mActivityAddSongBinding?.chbFeatured?.isChecked ?: false
         val isLatest = mActivityAddSongBinding?.chbLatest?.isChecked ?: false
         if (StringUtil.isEmpty(strName)) {
-            Toast.makeText(this, getString(R.string.msg_name_song_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_name_song_require), Toast.LENGTH_SHORT)
+                .show()
             return
         }
         if (StringUtil.isEmpty(strArtist)) {
-            Toast.makeText(this, getString(R.string.msg_artist_song_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_artist_song_require), Toast.LENGTH_SHORT)
+                .show()
             return
         }
         if (StringUtil.isEmpty(strImage)) {
-            Toast.makeText(this, getString(R.string.msg_image_song_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_image_song_require), Toast.LENGTH_SHORT)
+                .show()
             return
         }
         if (StringUtil.isEmpty(strLink)) {
-            Toast.makeText(this, getString(R.string.msg_link_song_require), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_link_song_require), Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -97,12 +101,15 @@ class AddSongActivity : BaseActivity() {
             map["featured"] = isFeatured
             map["latest"] = isLatest
             MyApplication[this].songsDatabaseReference()
-                    ?.child(mSong!!.id.toString())?.updateChildren(map) { _: DatabaseError?, _: DatabaseReference? ->
-                        showProgressDialog(false)
-                        Toast.makeText(this@AddSongActivity,
-                                getString(R.string.msg_edit_song_success), Toast.LENGTH_SHORT).show()
-                        GlobalFunction.hideSoftKeyboard(this)
-                    }
+                ?.child(mSong!!.id.toString())
+                ?.updateChildren(map) { _: DatabaseError?, _: DatabaseReference? ->
+                    showProgressDialog(false)
+                    Toast.makeText(
+                        this@AddSongActivity,
+                        getString(R.string.msg_edit_song_success), Toast.LENGTH_SHORT
+                    ).show()
+                    GlobalFunction.hideSoftKeyboard(this)
+                }
             return
         }
 
@@ -111,16 +118,17 @@ class AddSongActivity : BaseActivity() {
         val songId = System.currentTimeMillis()
         val song = Song(songId, strName, strArtist, strImage, strLink, isFeatured, isLatest)
         MyApplication[this].songsDatabaseReference()
-                ?.child(songId.toString())?.setValue(song) { _: DatabaseError?, _: DatabaseReference? ->
-                    showProgressDialog(false)
-                    mActivityAddSongBinding?.edtName?.setText("")
-                    mActivityAddSongBinding?.edtArtist?.setText("")
-                    mActivityAddSongBinding?.edtImage?.setText("")
-                    mActivityAddSongBinding?.edtLink?.setText("")
-                    mActivityAddSongBinding?.chbFeatured?.isChecked = false
-                    mActivityAddSongBinding?.chbLatest?.isChecked = false
-                    GlobalFunction.hideSoftKeyboard(this)
-                    Toast.makeText(this, getString(R.string.msg_add_song_success), Toast.LENGTH_SHORT).show()
-                }
+            ?.child(songId.toString())?.setValue(song) { _: DatabaseError?, _: DatabaseReference? ->
+                showProgressDialog(false)
+                mActivityAddSongBinding?.edtName?.setText("")
+                mActivityAddSongBinding?.edtArtist?.setText("")
+                mActivityAddSongBinding?.edtImage?.setText("")
+                mActivityAddSongBinding?.edtLink?.setText("")
+                mActivityAddSongBinding?.chbFeatured?.isChecked = false
+                mActivityAddSongBinding?.chbLatest?.isChecked = false
+                GlobalFunction.hideSoftKeyboard(this)
+                Toast.makeText(this, getString(R.string.msg_add_song_success), Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
 }

@@ -42,4 +42,5 @@
     <color name="seek_bar_progress">#3399CC</color>
     <color name="seek_bar_secondary_progress">#3399CC</color>
     <color name="textHint">#FFFFFF</color>
+    <color name="bgrplaying">#66EFEFEF</color>
 </resources>

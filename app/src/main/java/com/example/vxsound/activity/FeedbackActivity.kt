@@ -47,11 +47,11 @@ class FeedbackActivity : BaseActivity() {
             showProgressDialog(true)
             val feedback = Feedback(strName, strPhone, strEmail, strComment)
             MyApplication.Companion[this].feedbackDatabaseReference()
-                    ?.child(System.currentTimeMillis().toString())
-                    ?.setValue(feedback) { _: DatabaseError?, _: DatabaseReference? ->
-                        showProgressDialog(false)
-                        sendFeedbackSuccess()
-                    }
+                ?.child(System.currentTimeMillis().toString())
+                ?.setValue(feedback) { _: DatabaseError?, _: DatabaseReference? ->
+                    showProgressDialog(false)
+                    sendFeedbackSuccess()
+                }
         }
     }
 
