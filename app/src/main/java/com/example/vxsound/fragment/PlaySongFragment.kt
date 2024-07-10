@@ -37,12 +37,17 @@ class PlaySongFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mFragmentPlaySongBinding = FragmentPlaySongBinding.inflate(inflater, container, false)
         if (activity != null) {
-            LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver,
-                    IntentFilter(Constant.CHANGE_LISTENER))
+            LocalBroadcastManager.getInstance(activity!!).registerReceiver(
+                mBroadcastReceiver,
+                IntentFilter(Constant.CHANGE_LISTENER)
+            )
         }
         initControl()
         showInfoSong()
@@ -56,7 +61,6 @@ class PlaySongFragment : Fragment(), View.OnClickListener {
 //        mFragmentPlaySongBinding!!.tvSongName.requestFocus()
 //        mFragmentPlaySongBinding!!.tvArtist.isSelected = true
 //        mFragmentPlaySongBinding!!.tvArtist.requestFocus()
-
 
 
 //        mActivityMainBinding!!.layoutBottom.tvSongName.isSelected = true
@@ -78,7 +82,8 @@ class PlaySongFragment : Fragment(), View.OnClickListener {
         mFragmentPlaySongBinding?.imgPrevious?.setOnClickListener(this)
         mFragmentPlaySongBinding?.imgPlay?.setOnClickListener(this)
         mFragmentPlaySongBinding?.imgNext?.setOnClickListener(this)
-        mFragmentPlaySongBinding?.seekbar?.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        mFragmentPlaySongBinding?.seekbar?.setOnSeekBarChangeListener(object :
+            OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 MusicService.mPlayer!!.seekTo(seekBar.progress)
             }
@@ -137,12 +142,14 @@ class PlaySongFragment : Fragment(), View.OnClickListener {
     private fun startAnimationPlayMusic() {
         val runnable: Runnable = object : Runnable {
             override fun run() {
-                mFragmentPlaySongBinding?.imgSong?.animate()?.rotationBy(360f)?.withEndAction(this)?.setDuration(15000)
-                        ?.setInterpolator(LinearInterpolator())?.start()
+                mFragmentPlaySongBinding?.imgSong?.animate()?.rotationBy(360f)?.withEndAction(this)
+                    ?.setDuration(15000)
+                    ?.setInterpolator(LinearInterpolator())?.start()
             }
         }
-        mFragmentPlaySongBinding?.imgSong?.animate()?.rotationBy(360f)?.withEndAction(runnable)?.setDuration(15000)
-                ?.setInterpolator(LinearInterpolator())?.start()
+        mFragmentPlaySongBinding?.imgSong?.animate()?.rotationBy(360f)?.withEndAction(runnable)
+            ?.setDuration(15000)
+            ?.setInterpolator(LinearInterpolator())?.start()
     }
 
     private fun stopAnimationPlayMusic() {
@@ -159,10 +166,13 @@ class PlaySongFragment : Fragment(), View.OnClickListener {
                     if (MusicService.mPlayer == null) {
                         return@runOnUiThread
                     }
-                    mFragmentPlaySongBinding?.tvTimeCurrent?.text = AppUtil.getTime(MusicService.mPlayer!!.currentPosition)
-                    mFragmentPlaySongBinding?.tvTimeMax?.text = AppUtil.getTime(MusicService.mLengthSong)
+                    mFragmentPlaySongBinding?.tvTimeCurrent?.text =
+                        AppUtil.getTime(MusicService.mPlayer!!.currentPosition)
+                    mFragmentPlaySongBinding?.tvTimeMax?.text =
+                        AppUtil.getTime(MusicService.mLengthSong)
                     mFragmentPlaySongBinding?.seekbar?.max = MusicService.mLengthSong
-                    mFragmentPlaySongBinding?.seekbar?.progress = MusicService.mPlayer!!.currentPosition
+                    mFragmentPlaySongBinding?.seekbar?.progress =
+                        MusicService.mPlayer!!.currentPosition
                 }
             }
         }, 0, 1000)

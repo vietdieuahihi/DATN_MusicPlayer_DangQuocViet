@@ -29,11 +29,18 @@ class ListSongPlayingFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mFragmentListSongPlayingBinding = FragmentListSongPlayingBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mFragmentListSongPlayingBinding =
+            FragmentListSongPlayingBinding.inflate(inflater, container, false)
         if (activity != null) {
-            LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver,
-                    IntentFilter(Constant.CHANGE_LISTENER))
+            LocalBroadcastManager.getInstance(activity!!).registerReceiver(
+                mBroadcastReceiver,
+                IntentFilter(Constant.CHANGE_LISTENER)
+            )
         }
         displayListSongPlaying()
         return mFragmentListSongPlayingBinding?.root
@@ -50,12 +57,12 @@ class ListSongPlayingFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(activity)
         mFragmentListSongPlayingBinding?.rcvData?.layoutManager = linearLayoutManager
         mSongPlayingAdapter = SongPlayingAdapter(MusicService.mListSongPlaying,
-                object: IOnClickSongPlayingItemListener {
-            override fun onClickItemSongPlaying(position: Int) {
-                clickItemSongPlaying(position)
-            }
+            object : IOnClickSongPlayingItemListener {
+                override fun onClickItemSongPlaying(position: Int) {
+                    clickItemSongPlaying(position)
+                }
 
-        })
+            })
         mFragmentListSongPlayingBinding?.rcvData?.adapter = mSongPlayingAdapter
         updateStatusListSongPlaying()
     }

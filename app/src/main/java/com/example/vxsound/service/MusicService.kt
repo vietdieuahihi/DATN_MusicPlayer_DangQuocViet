@@ -172,25 +172,41 @@ class MusicService : Service(), OnPreparedListener, OnCompletionListener {
         } else {
             Intent(this, MainActivity::class.java)
         }
-        @SuppressLint("UnspecifiedImmutableFlag") val pendingIntent = PendingIntent.getActivity(this, 0, intent, pendingFlag)
+        @SuppressLint("UnspecifiedImmutableFlag") val pendingIntent =
+            PendingIntent.getActivity(this, 0, intent, pendingFlag)
         val remoteViews = RemoteViews(packageName, R.layout.layout_push_notification_music)
         remoteViews.setTextViewText(R.id.tv_song_name, song.title)
 
         // Set listener
-        remoteViews.setOnClickPendingIntent(R.id.img_previous, GlobalFunction.openMusicReceiver(this, Constant.PREVIOUS))
-        remoteViews.setOnClickPendingIntent(R.id.img_next, GlobalFunction.openMusicReceiver(this, Constant.NEXT))
+        remoteViews.setOnClickPendingIntent(
+            R.id.img_previous,
+            GlobalFunction.openMusicReceiver(this, Constant.PREVIOUS)
+        )
+        remoteViews.setOnClickPendingIntent(
+            R.id.img_next,
+            GlobalFunction.openMusicReceiver(this, Constant.NEXT)
+        )
         if (isPlaying) {
             remoteViews.setImageViewResource(R.id.img_play, R.drawable.ic_pause_gray)
-            remoteViews.setOnClickPendingIntent(R.id.img_play, GlobalFunction.openMusicReceiver(this, Constant.PAUSE))
+            remoteViews.setOnClickPendingIntent(
+                R.id.img_play,
+                GlobalFunction.openMusicReceiver(this, Constant.PAUSE)
+            )
         } else {
             remoteViews.setImageViewResource(R.id.img_play, R.drawable.ic_play_gray)
-            remoteViews.setOnClickPendingIntent(R.id.img_play, GlobalFunction.openMusicReceiver(this, Constant.RESUME))
+            remoteViews.setOnClickPendingIntent(
+                R.id.img_play,
+                GlobalFunction.openMusicReceiver(this, Constant.RESUME)
+            )
         }
-        remoteViews.setOnClickPendingIntent(R.id.img_close, GlobalFunction.openMusicReceiver(this, Constant.CANNEL_NOTIFICATION))
+        remoteViews.setOnClickPendingIntent(
+            R.id.img_close,
+            GlobalFunction.openMusicReceiver(this, Constant.CANNEL_NOTIFICATION)
+        )
         val builder = NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_small_push_notification)
-                .setContentIntent(pendingIntent)
-                .setSound(null)
+            .setSmallIcon(R.drawable.ic_small_push_notification)
+            .setContentIntent(pendingIntent)
+            .setSound(null)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             builder.setCustomBigContentView(remoteViews)
         } else {
@@ -224,18 +240,20 @@ class MusicService : Service(), OnPreparedListener, OnCompletionListener {
     private fun changeCountViewSong() {
         val songId = mListSongPlaying!![mSongPosition].id
         MyApplication[this].countViewDatabaseReference(songId)
-                ?.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val currentCount = snapshot.getValue(Int::class.java)
-                        if (currentCount != null) {
-                            val newCount = currentCount + 1
-                            MyApplication[this@MusicService].countViewDatabaseReference(songId)?.removeEventListener(this)
-                            MyApplication[this@MusicService].countViewDatabaseReference(songId)?.setValue(newCount)
-                        }
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val currentCount = snapshot.getValue(Int::class.java)
+                    if (currentCount != null) {
+                        val newCount = currentCount + 1
+                        MyApplication[this@MusicService].countViewDatabaseReference(songId)
+                            ?.removeEventListener(this)
+                        MyApplication[this@MusicService].countViewDatabaseReference(songId)
+                            ?.setValue(newCount)
                     }
+                }
 
-                    override fun onCancelled(error: DatabaseError) {}
-                })
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     override fun onDestroy() {

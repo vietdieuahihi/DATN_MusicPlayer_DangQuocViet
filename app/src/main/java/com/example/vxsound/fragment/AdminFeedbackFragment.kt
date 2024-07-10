@@ -19,8 +19,13 @@ class AdminFeedbackFragment : Fragment() {
     private var mListFeedback: MutableList<Feedback>? = null
     private var mFeedbackAdapter: AdminFeedbackAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mFragmentAdminFeedbackBinding = FragmentAdminFeedbackBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mFragmentAdminFeedbackBinding =
+            FragmentAdminFeedbackBinding.inflate(inflater, container, false)
         initView()
         loadListFeedback()
         return mFragmentAdminFeedbackBinding?.root
@@ -35,24 +40,24 @@ class AdminFeedbackFragment : Fragment() {
     private fun loadListFeedback() {
         if (activity == null) return
         MyApplication[activity!!].feedbackDatabaseReference()
-                ?.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (mListFeedback != null) {
-                            mListFeedback!!.clear()
-                        } else {
-                            mListFeedback = ArrayList()
-                        }
-                        for (dataSnapshot in snapshot.children) {
-                            val feedback = dataSnapshot.getValue(Feedback::class.java)
-                            if (feedback != null) {
-                                mListFeedback!!.add(0, feedback)
-                            }
-                        }
-                        mFeedbackAdapter = AdminFeedbackAdapter(mListFeedback)
-                        mFragmentAdminFeedbackBinding?.rcvFeedback?.adapter = mFeedbackAdapter
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (mListFeedback != null) {
+                        mListFeedback!!.clear()
+                    } else {
+                        mListFeedback = ArrayList()
                     }
+                    for (dataSnapshot in snapshot.children) {
+                        val feedback = dataSnapshot.getValue(Feedback::class.java)
+                        if (feedback != null) {
+                            mListFeedback!!.add(0, feedback)
+                        }
+                    }
+                    mFeedbackAdapter = AdminFeedbackAdapter(mListFeedback)
+                    mFragmentAdminFeedbackBinding?.rcvFeedback?.adapter = mFeedbackAdapter
+                }
 
-                    override fun onCancelled(error: DatabaseError) {}
-                })
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 }

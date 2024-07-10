@@ -33,7 +33,8 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mFragmentSettingsBinding = FragmentSettingsBinding.inflate(inflater, container, false)
-        sharedPreferences = requireActivity().getSharedPreferences("LangPrefs", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("LangPrefs", Context.MODE_PRIVATE)
         initUi()
         initListener()
         return mFragmentSettingsBinding?.root
@@ -70,14 +71,16 @@ class SettingsFragment : Fragment() {
             setLocale("en")
         }
 
-        mFragmentSettingsBinding?.modeSwitch?.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        mFragmentSettingsBinding?.modeSwitch?.isChecked =
+            AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
         mFragmentSettingsBinding?.modeSwitch?.setOnCheckedChangeListener { _, isChecked ->
             setDarkMode(isChecked)
         }
     }
 
     private fun setDarkMode(isDarkMode: Boolean) {
-        val sharedPreferences = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean("dark_mode", isDarkMode).apply()
 
         // Send broadcast to MainActivity to update dark mode
@@ -107,7 +110,8 @@ class SettingsFragment : Fragment() {
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("LangPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireActivity().getSharedPreferences("LangPrefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("app_language", lang).apply()
 
         // Send broadcast to MainActivity to update locale

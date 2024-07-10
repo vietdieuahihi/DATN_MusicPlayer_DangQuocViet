@@ -7,7 +7,11 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.vxsound.R
 
-class AspectRatioNoRadiusImageView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatImageView(context!!, attrs, defStyleAttr) {
+class AspectRatioNoRadiusImageView @JvmOverloads constructor(
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatImageView(context!!, attrs, defStyleAttr) {
     private var aspectRatio = 0f
     private var aspectRatioEnabled = false
     private var dominantMeasurement = 0
@@ -25,10 +29,14 @@ class AspectRatioNoRadiusImageView @JvmOverloads constructor(context: Context?, 
         try {
             a = context.obtainStyledAttributes(attributeSet, R.styleable.AspectRatioView)
             aspectRatio = a.getFloat(R.styleable.AspectRatioView_aspectRatio, DEFAULT_ASPECT_RATIO)
-            aspectRatioEnabled = a.getBoolean(R.styleable.AspectRatioView_aspectRatioEnabled,
-                    DEFAULT_ASPECT_RATIO_ENABLED)
-            dominantMeasurement = a.getInt(R.styleable.AspectRatioView_dominantMeasurement,
-                    DEFAULT_DOMINANT_MEASUREMENT)
+            aspectRatioEnabled = a.getBoolean(
+                R.styleable.AspectRatioView_aspectRatioEnabled,
+                DEFAULT_ASPECT_RATIO_ENABLED
+            )
+            dominantMeasurement = a.getInt(
+                R.styleable.AspectRatioView_dominantMeasurement,
+                DEFAULT_DOMINANT_MEASUREMENT
+            )
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {

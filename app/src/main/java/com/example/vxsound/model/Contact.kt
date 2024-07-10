@@ -1,7 +1,6 @@
 package com.example.vxsound.model
 
 class Contact(var id: Int, var image: Int) {
-
     companion object {
         const val FACEBOOK = 0
         const val HOTLINE = 1

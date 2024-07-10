@@ -38,7 +38,11 @@ class AdminHomeFragment : Fragment() {
     private var mListSong: MutableList<Song>? = null
     private var mAdminSongAdapter: AdminSongAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mFragmentAdminHomeBinding = FragmentAdminHomeBinding.inflate(inflater, container, false)
         initView()
         initListener()
@@ -109,21 +113,24 @@ class AdminHomeFragment : Fragment() {
 
     private fun deleteSongItem(song: Song) {
         AlertDialog.Builder(activity)
-                .setTitle(getString(R.string.msg_delete_title))
-                .setMessage(getString(R.string.msg_confirm_delete))
-                .setPositiveButton(getString(R.string.action_ok)) { _: DialogInterface?, _: Int ->
-                    if (activity == null) {
-                        return@setPositiveButton
-                    }
-                    MyApplication[activity].songsDatabaseReference()
-                            ?.child(song.id.toString())?.removeValue { _: DatabaseError?, _: DatabaseReference? ->
-                                Toast.makeText(activity,
-                                        getString(R.string.msg_delete_movie_successfully),
-                                        Toast.LENGTH_SHORT).show()
-                            }
+            .setTitle(getString(R.string.msg_delete_title))
+            .setMessage(getString(R.string.msg_confirm_delete))
+            .setPositiveButton(getString(R.string.action_ok)) { _: DialogInterface?, _: Int ->
+                if (activity == null) {
+                    return@setPositiveButton
                 }
-                .setNegativeButton(getString(R.string.action_cancel), null)
-                .show()
+                MyApplication[activity].songsDatabaseReference()
+                    ?.child(song.id.toString())
+                    ?.removeValue { _: DatabaseError?, _: DatabaseReference? ->
+                        Toast.makeText(
+                            activity,
+                            getString(R.string.msg_delete_movie_successfully),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+            .setNegativeButton(getString(R.string.action_cancel), null)
+            .show()
     }
 
     private fun searchSong() {
@@ -140,50 +147,54 @@ class AdminHomeFragment : Fragment() {
     private fun loadListSong(keyword: String?) {
         if (activity == null) return
         MyApplication[activity].songsDatabaseReference()
-                ?.addChildEventListener(object : ChildEventListener {
-                    @SuppressLint("NotifyDataSetChanged")
-                    override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                        val song = dataSnapshot.getValue(Song::class.java)
-                        if (song == null || mListSong == null) return
-                        if (StringUtil.isEmpty(keyword)) {
+            ?.addChildEventListener(object : ChildEventListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                    val song = dataSnapshot.getValue(Song::class.java)
+                    if (song == null || mListSong == null) return
+                    if (StringUtil.isEmpty(keyword)) {
+                        mListSong!!.add(0, song)
+                    } else {
+                        if (GlobalFunction.getTextSearch(song.title)
+                                .toLowerCase(Locale.getDefault()).trim { it <= ' ' }
+                                .contains(
+                                    GlobalFunction.getTextSearch(keyword)
+                                        .toLowerCase(Locale.getDefault()).trim { it <= ' ' })
+                        ) {
                             mListSong!!.add(0, song)
-                        } else {
-                            if (GlobalFunction.getTextSearch(song.title).toLowerCase(Locale.getDefault()).trim { it <= ' ' }
-                                            .contains(GlobalFunction.getTextSearch(keyword).toLowerCase(Locale.getDefault()).trim { it <= ' ' })) {
-                                mListSong!!.add(0, song)
-                            }
                         }
-                        if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
                     }
+                    if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
+                }
 
-                    @SuppressLint("NotifyDataSetChanged")
-                    override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-                        val song = dataSnapshot.getValue(Song::class.java)
-                        if (song == null || mListSong == null || mListSong!!.isEmpty()) return
-                        for (i in mListSong!!.indices) {
-                            if (song.id == mListSong!![i].id) {
-                                mListSong!![i] = song
-                                break
-                            }
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+                    val song = dataSnapshot.getValue(Song::class.java)
+                    if (song == null || mListSong == null || mListSong!!.isEmpty()) return
+                    for (i in mListSong!!.indices) {
+                        if (song.id == mListSong!![i].id) {
+                            mListSong!![i] = song
+                            break
                         }
-                        if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
                     }
+                    if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
+                }
 
-                    @SuppressLint("NotifyDataSetChanged")
-                    override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                        val song = dataSnapshot.getValue(Song::class.java)
-                        if (song == null || mListSong == null || mListSong!!.isEmpty()) return
-                        for (songObject in mListSong!!) {
-                            if (song.id == songObject.id) {
-                                mListSong!!.remove(songObject)
-                                break
-                            }
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                    val song = dataSnapshot.getValue(Song::class.java)
+                    if (song == null || mListSong == null || mListSong!!.isEmpty()) return
+                    for (songObject in mListSong!!) {
+                        if (song.id == songObject.id) {
+                            mListSong!!.remove(songObject)
+                            break
                         }
-                        if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
                     }
+                    if (mAdminSongAdapter != null) mAdminSongAdapter!!.notifyDataSetChanged()
+                }
 
-                    override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
-                    override fun onCancelled(databaseError: DatabaseError) {}
-                })
+                override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
     }
 }

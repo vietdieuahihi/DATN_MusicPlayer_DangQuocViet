@@ -16,7 +16,15 @@ class Song : Serializable {
 
     constructor()
 
-    constructor(id: Long, title: String?, artist: String?, image: String?, url: String?, latest: Boolean?, featured: Boolean?) {
+    constructor(
+        id: Long,
+        title: String?,
+        artist: String?,
+        image: String?,
+        url: String?,
+        latest: Boolean?,
+        featured: Boolean?
+    ) {
         this.id = id
         this.title = title
         this.artist = artist

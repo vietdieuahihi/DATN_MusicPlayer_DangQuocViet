@@ -12,10 +12,10 @@ object GlideUtils {
         }
         try {
             Glide.with(imageView.context)
-                    .load(url)
-                    .error(R.drawable.img_no_image)
-                    .dontAnimate()
-                    .into(imageView)
+                .load(url)
+                .error(R.drawable.img_no_image)
+                .dontAnimate()
+                .into(imageView)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -28,10 +28,10 @@ object GlideUtils {
         }
         try {
             Glide.with(imageView.context)
-                    .load(url)
-                    .error(R.drawable.image_no_available)
-                    .dontAnimate()
-                    .into(imageView)
+                .load(url)
+                .error(R.drawable.image_no_available)
+                .dontAnimate()
+                .into(imageView)
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -40,7 +40,8 @@ object GlobalFunction {
 
     fun hideSoftKeyboard(activity: Activity?) {
         try {
-            val inputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
         } catch (ex: NullPointerException) {
             ex.printStackTrace()
@@ -48,8 +49,11 @@ object GlobalFunction {
     }
 
     fun onClickOpenGmail(context: Context?) {
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", AboutUsConfig.GMAIL, null))
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", AboutUsConfig.GMAIL, null
+            )
+        )
         context?.startActivity(Intent.createChooser(emailIntent, "Send Email"))
     }
 
@@ -67,14 +71,28 @@ object GlobalFunction {
 
     private fun openSkypeWebView(context: Context?) {
         try {
-            context?.startActivity(Intent(Intent.ACTION_VIEW,
-                    Uri.parse("skype:" + AboutUsConfig.SKYPE_ID + "?chat")))
+            context?.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("skype:" + AboutUsConfig.SKYPE_ID + "?chat")
+                )
+            )
         } catch (exception: Exception) {
             val skypePackageName = "com.skype.raider"
             try {
-                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$skypePackageName")))
+                context?.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$skypePackageName")
+                    )
+                )
             } catch (anfe: ActivityNotFoundException) {
-                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$skypePackageName")))
+                context?.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$skypePackageName")
+                    )
+                )
             }
         }
     }
@@ -106,8 +124,16 @@ object GlobalFunction {
     fun callPhoneNumber(activity: Activity) {
         try {
             if (Build.VERSION.SDK_INT > 22) {
-                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), 101)
+                if (ActivityCompat.checkSelfPermission(
+                        activity,
+                        Manifest.permission.CALL_PHONE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        101
+                    )
                     return
                 }
                 val callIntent = Intent(Intent.ACTION_CALL)
@@ -170,18 +196,18 @@ object GlobalFunction {
             val userEmail: String? = DataStoreManager.user?.email
             val userInfo = UserInfor(System.currentTimeMillis(), userEmail)
             MyApplication[context].songsDatabaseReference()
-                    ?.child(song.id.toString())
-                    ?.child("favorite")
-                    ?.child(userInfo.id.toString())
-                    ?.setValue(userInfo)
+                ?.child(song.id.toString())
+                ?.child("favorite")
+                ?.child(userInfo.id.toString())
+                ?.setValue(userInfo)
         } else {
             val userInfo: UserInfor? = getUserFavoriteSong(song)
             if (userInfo != null) {
                 MyApplication[context].songsDatabaseReference()
-                        ?.child(song.id.toString())
-                        ?.child("favorite")
-                        ?.child(userInfo.id.toString())
-                        ?.removeValue()
+                    ?.child(song.id.toString())
+                    ?.child("favorite")
+                    ?.child(userInfo.id.toString())
+                    ?.removeValue()
             }
         }
     }

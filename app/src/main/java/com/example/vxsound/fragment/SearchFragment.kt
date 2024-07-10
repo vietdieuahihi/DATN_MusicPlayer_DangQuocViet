@@ -34,7 +34,11 @@ class SearchFragment : Fragment() {
     private var mListSong: MutableList<Song>? = null
     private var mSongAdapter: SongAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mFragmentSearchBinding = FragmentSearchBinding.inflate(inflater, container, false)
         initUi()
         initListener()
@@ -61,29 +65,37 @@ class SearchFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun loadListSongFromFirebase(key: String) {
         if (activity == null) return
-        MyApplication[activity].songsDatabaseReference()?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                resetListData()
-                for (dataSnapshot in snapshot.children) {
-                    val song = dataSnapshot.getValue(Song::class.java) ?: return
-                    if (StringUtil.isEmpty(key)) {
-                        mListSong!!.add(0, song)
-                    } else {
-                        if (GlobalFunction.getTextSearch(song.title).toLowerCase(Locale.getDefault()).trim { it <= ' ' }
-                                        .contains(GlobalFunction.getTextSearch(key).toLowerCase(Locale.getDefault()).trim { it <= ' ' })) {
+        MyApplication[activity].songsDatabaseReference()
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    resetListData()
+                    for (dataSnapshot in snapshot.children) {
+                        val song = dataSnapshot.getValue(Song::class.java) ?: return
+                        if (StringUtil.isEmpty(key)) {
                             mListSong!!.add(0, song)
+                        } else {
+                            if (GlobalFunction.getTextSearch(song.title)
+                                    .toLowerCase(Locale.getDefault()).trim { it <= ' ' }
+                                    .contains(
+                                        GlobalFunction.getTextSearch(key)
+                                            .toLowerCase(Locale.getDefault()).trim { it <= ' ' })
+                            ) {
+                                mListSong!!.add(0, song)
+                            }
                         }
                     }
+                    val isHasData = mListSong != null && mListSong!!.size > 1
+                    displayLayoutPlayAll(isHasData)
+                    if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
                 }
-                val isHasData = mListSong != null && mListSong!!.size > 1
-                displayLayoutPlayAll(isHasData)
-                if (mSongAdapter != null) mSongAdapter!!.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                GlobalFunction.showToastMessage(activity, getString(R.string.msg_get_date_error))
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    GlobalFunction.showToastMessage(
+                        activity,
+                        getString(R.string.msg_get_date_error)
+                    )
+                }
+            })
     }
 
     private fun resetListData() {

@@ -43,10 +43,15 @@ class HomeFragment : Fragment() {
             mFragmentHomeBinding?.viewpager2?.currentItem = 0
             return@Runnable
         }
-        mFragmentHomeBinding?.viewpager2?.currentItem = mFragmentHomeBinding?.viewpager2?.currentItem!! + 1
+        mFragmentHomeBinding?.viewpager2?.currentItem =
+            mFragmentHomeBinding?.viewpager2?.currentItem!! + 1
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mFragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
         loadListSongFromFirebase()
         initListener()
@@ -54,31 +59,50 @@ class HomeFragment : Fragment() {
     }
 
     private fun initListener() {
-        mFragmentHomeBinding?.layoutViewAllFeatured?.setOnClickListener { GlobalFunction.startActivity(activity, FeaturedSongsActivity::class.java) }
-        mFragmentHomeBinding?.layoutViewAllPopular?.setOnClickListener { GlobalFunction.startActivity(activity, PopularSongsActivity::class.java) }
-        mFragmentHomeBinding?.layoutViewAllNewSongs?.setOnClickListener { GlobalFunction.startActivity(activity, NewSongsActivity::class.java) }
+        mFragmentHomeBinding?.layoutViewAllFeatured?.setOnClickListener {
+            GlobalFunction.startActivity(
+                activity,
+                FeaturedSongsActivity::class.java
+            )
+        }
+        mFragmentHomeBinding?.layoutViewAllPopular?.setOnClickListener {
+            GlobalFunction.startActivity(
+                activity,
+                PopularSongsActivity::class.java
+            )
+        }
+        mFragmentHomeBinding?.layoutViewAllNewSongs?.setOnClickListener {
+            GlobalFunction.startActivity(
+                activity,
+                NewSongsActivity::class.java
+            )
+        }
     }
 
     private fun loadListSongFromFirebase() {
         if (activity == null) return
-        MyApplication[activity].songsDatabaseReference()?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                mFragmentHomeBinding?.layoutContent?.visibility = View.VISIBLE
-                resetListSong()
-                for (dataSnapshot in snapshot.children) {
-                    val song = dataSnapshot.getValue(Song::class.java) ?: return
-                    mListSong!!.add(0, song)
+        MyApplication[activity].songsDatabaseReference()
+            ?.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    mFragmentHomeBinding?.layoutContent?.visibility = View.VISIBLE
+                    resetListSong()
+                    for (dataSnapshot in snapshot.children) {
+                        val song = dataSnapshot.getValue(Song::class.java) ?: return
+                        mListSong!!.add(0, song)
+                    }
+                    displayListBannerSongs()
+                    displayListFeaturedSongs()
+                    displayListNewSongs()
+                    displayListPopularSongs()
                 }
-                displayListBannerSongs()
-                displayListFeaturedSongs()
-                displayListNewSongs()
-                displayListPopularSongs()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                GlobalFunction.showToastMessage(activity, getString(R.string.msg_get_date_error))
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    GlobalFunction.showToastMessage(
+                        activity,
+                        getString(R.string.msg_get_date_error)
+                    )
+                }
+            })
     }
 
     private fun resetListSong() {
@@ -90,16 +114,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayListBannerSongs() {
-        val bannerSongAdapter = BannerSongAdapter(listBannerSongs(), object : IOnClickSongItemListener {
-            override fun onClickItemSong(song: Song) {
-                goToSongDetail(song)
-            }
+        val bannerSongAdapter =
+            BannerSongAdapter(listBannerSongs(), object : IOnClickSongItemListener {
+                override fun onClickItemSong(song: Song) {
+                    goToSongDetail(song)
+                }
 
-            override fun onClickFavoriteSong(song: Song, favorite: Boolean) {}
-        })
+                override fun onClickFavoriteSong(song: Song, favorite: Boolean) {}
+            })
         mFragmentHomeBinding?.viewpager2?.adapter = bannerSongAdapter
         mFragmentHomeBinding?.indicator3?.setViewPager(mFragmentHomeBinding?.viewpager2)
-        mFragmentHomeBinding?.viewpager2?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+        mFragmentHomeBinding?.viewpager2?.registerOnPageChangeCallback(object :
+            OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mHandlerBanner.removeCallbacks(mRunnableBanner)
@@ -126,17 +152,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayListFeaturedSongs() {
-        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val linearLayoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         mFragmentHomeBinding?.rcvFeaturedSongs?.layoutManager = linearLayoutManager
-        val songGridAdapter = SongGridAdapter(listFeaturedSongs(), object : IOnClickSongItemListener {
-            override fun onClickItemSong(song: Song) {
-                goToSongDetail(song)
-            }
+        val songGridAdapter =
+            SongGridAdapter(listFeaturedSongs(), object : IOnClickSongItemListener {
+                override fun onClickItemSong(song: Song) {
+                    goToSongDetail(song)
+                }
 
-            override fun onClickFavoriteSong(song: Song, favorite: Boolean) {
-                GlobalFunction.onClickFavoriteSong(activity, song, favorite)
-            }
-        })
+                override fun onClickFavoriteSong(song: Song, favorite: Boolean) {
+                    GlobalFunction.onClickFavoriteSong(activity, song, favorite)
+                }
+            })
         mFragmentHomeBinding?.rcvFeaturedSongs?.adapter = songGridAdapter
     }
 
@@ -154,7 +182,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayListNewSongs() {
-        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val linearLayoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         mFragmentHomeBinding?.rcvNewSongs?.layoutManager = linearLayoutManager
         val songGridAdapter = SongGridAdapter(listNewSongs(), object : IOnClickSongItemListener {
             override fun onClickItemSong(song: Song) {

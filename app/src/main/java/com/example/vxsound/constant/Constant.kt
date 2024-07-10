@@ -22,6 +22,7 @@ object Constant {
 
     //
     const val CHANGE_LANGUAGE = "com.example.vxsound.CHANGE_LANGUAGE"
+
     //
     const val CHANGE_DARK_MODE = "com.example.vxsound.CHANGE_DARK_MODE"
 }
