@@ -27,8 +27,6 @@ class AddSongActivity : BaseActivity() {
         initToolbar()
         initView()
         mActivityAddSongBinding?.btnAddOrEdit?.setOnClickListener { addOrEditFood() }
-
-
     }
 
     private fun loadDataIntent() {

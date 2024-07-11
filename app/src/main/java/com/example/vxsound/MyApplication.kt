@@ -21,7 +21,6 @@ class MyApplication : Application() {
         mFirebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_URL)
         createChannelNotification()
         DataStoreManager.init(applicationContext)
-
     }
 
     private fun createChannelNotification() {
